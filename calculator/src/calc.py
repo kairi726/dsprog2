@@ -1,4 +1,6 @@
 import flet as ft
+import math
+
 
 
 class CalcButton(ft.ElevatedButton):
@@ -43,7 +45,24 @@ class CalculatorApp(ft.Container):
         self.border_radius = ft.border_radius.all(20)
         self.padding = 20
         self.content = ft.Column(
+
+            
+                
+                    
+            
+
             controls=[
+                ft.Row(
+                    controls=[
+                        ExtraActionButton(text="x²", button_clicked=self.button_clicked),
+                        ExtraActionButton(text="x²", button_clicked=self.button_clicked),
+                        ExtraActionButton(text="x³", button_clicked=self.button_clicked),
+                        ExtraActionButton(text="x⁴", button_clicked=self.button_clicked),
+                        ExtraActionButton(text="x⁵", button_clicked=self.button_clicked),
+                        ExtraActionButton(text="sin", button_clicked=self.button_clicked),
+                    ]
+                ),   
+
                 ft.Row(controls=[self.result], alignment="end"),
                 ft.Row(
                     controls=[
@@ -136,6 +155,30 @@ class CalculatorApp(ft.Container):
                 self.result.value = str(
                     self.format_number(abs(float(self.result.value)))
                 )
+
+
+        elif data in ("x²", "x³", "x⁴", "x⁵", "sin"):
+            value = float(self.result.value)
+
+            try:
+                if data == "x²":
+                    self.result.value = self.format_number(value ** 2)
+                elif data == "x³":
+                    self.result.value = self.format_number(value ** 3)
+                elif data == "x⁴":
+                    self.result.value = self.format_number(value ** 4)
+                elif data == "x⁵":
+                    self.result.value = self.format_number(value ** 5)
+                elif data == "sin":
+                    self.result.value = self.format_number(
+                        math.sin(math.radians(value))
+                    )
+
+                self.reset()
+
+            except:
+                self.result.value = "Error"
+
 
         self.update()
 
